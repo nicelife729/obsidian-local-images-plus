@@ -453,6 +453,7 @@ export default class SettingTab extends PluginSettingTab {
 
 
             containerEl.createEl("h3", { text: "Troubleshooting" })
+            
             new Setting(containerEl)
             .setName("Debug")
             .setDesc("Enable debug output to console.")
@@ -465,6 +466,19 @@ export default class SettingTab extends PluginSettingTab {
                     })
             )
 
+            containerEl.createEl("h3", { text: "Cookie" })
+
+            new Setting(containerEl)
+            .setName("GitLab Cookies setting")
+            .setDesc("设置形如这样的Cookie，可以下载需验证的图片和资源，gitlab.com||_gitlab_session=xxxx;")
+            .addText((text) =>
+                text
+                    .setValue(this.plugin.settings.cookies.length>0 ? this.plugin.settings.cookies[0] : "")
+                    .onChange(async (value: string) => {
+                        this.plugin.settings.cookies[0] = value  
+                        await this.plugin.saveSettings()
+                    })
+            )
         this.displSw(containerEl)
     }
 }

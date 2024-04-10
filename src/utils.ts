@@ -298,14 +298,30 @@ export async function readFromDisk(file: string): Promise<ArrayBuffer> {
   }
 }
 
-export async function downloadImage(url: string): Promise<ArrayBuffer> {
+export async function downloadImage(url: string, cookies: Array<string>): Promise<ArrayBuffer> {
 
   logError("Downloading: " + url, false);
-  const headers = {
-    'method': 'GET',
-    'User-Agent': USER_AGENT
+  let headers;
+  if (cookies && cookies.length > 0) {
+    const urlPattern = cookies[0].split("||")?.[0];
+    const cookie  = cookies[0].split("||")?.[1];
+    if (urlPattern && url.contains(urlPattern)) {
+      headers = {
+        'method': 'GET',
+        'User-Agent': USER_AGENT,
+        Cookie: cookie
+      }
+    } else {
+      new Notice("cookies格式错误，无法下载图片" + cookies[0])
+    }
+    
+  } else {
+    headers = {
+      'method': 'GET',
+      'User-Agent': USER_AGENT
+    }
   }
-
+ 
   try {
     const res = await requestUrl({ url: url, headers })
     logError(res, true);

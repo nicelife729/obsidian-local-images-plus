@@ -1,3 +1,6 @@
+import { Cookie } from 'set-cookie-parser';
+import { writable } from 'svelte/store';
+
 export const APP_TITLE = "Local Images Plus  0.15.9";
 
 
@@ -51,6 +54,7 @@ export const TIMEOUT_LIKE_INFINITY = 24 * 60 * 60 * 1000;
 export const FORBIDDEN_SYMBOLS_FILENAME_PATTERN = /\s+/g;
 
 export interface ISettings {
+  cookies: Array<string>,
   processCreated: boolean,
   ignoredExt: string,
   processAll: boolean,
@@ -77,6 +81,7 @@ export interface ISettings {
 }
 
 export const DEFAULT_SETTINGS: ISettings = {
+  cookies: [],
   processCreated: true,
   ignoredExt: "cnt|php|htm|html",
   processAll: true,
