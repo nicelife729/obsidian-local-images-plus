@@ -300,9 +300,9 @@ export async function readFromDisk(file: string): Promise<ArrayBuffer> {
 
 export async function downloadImage(url: string, cookies: Array<string>): Promise<ArrayBuffer> {
 
-  logError("Downloading: " + url, false);
   let headers;
   if (cookies && cookies.length > 0) {
+    new Notice("Downloading with cookie: " + url);
     const urlPattern = cookies[0].split("||")?.[0];
     const cookie  = cookies[0].split("||")?.[1];
     if (urlPattern && url.contains(urlPattern)) {
@@ -316,6 +316,7 @@ export async function downloadImage(url: string, cookies: Array<string>): Promis
     }
     
   } else {
+    new Notice("Downloading: " + url);
     headers = {
       'method': 'GET',
       'User-Agent': USER_AGENT
