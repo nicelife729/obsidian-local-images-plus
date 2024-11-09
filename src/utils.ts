@@ -305,6 +305,7 @@ export async function downloadImage(url: string, cookies: Array<string>): Promis
     new Notice("Downloading with cookie: " + url);
     const urlPattern = cookies[0].split("||")?.[0];
     const cookie  = cookies[0].split("||")?.[1];
+    new Notice("cookie: " + cookie + "??" + cookies.join("  "));
     if (urlPattern && url.contains(urlPattern)) {
       headers = {
         'method': 'GET',
